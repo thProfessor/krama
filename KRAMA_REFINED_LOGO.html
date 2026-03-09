@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krama - Refined Typographic Identity</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #FDFBF7; color: #3E2723; font-family: 'Space Grotesk', sans-serif; }
+        
+        /* Ledger Grid Background */
+        .grid-bg { 
+            background-image: 
+                linear-gradient(to right, rgba(139, 69, 19, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(139, 69, 19, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .logo-container {
+            background: white;
+            border: 1px solid #F1ECE1;
+            border-radius: 60px;
+            box-shadow: 0 40px 100px -20px rgba(62, 39, 35, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sound-k-icon {
+            display: inline-flex;
+            align-items: center;
+            vertical-align: middle;
+        }
+
+        @keyframes wave-pulse {
+            0%, 100% { transform: scaleX(1); opacity: 1; }
+            50% { transform: scaleX(1.1); opacity: 0.7; }
+        }
+        .pulse-wave { animation: wave-pulse 2s infinite ease-in-out; }
+    </style>
+</head>
+<body class="p-10 md:p-20 grid-bg min-h-screen flex items-center justify-center">
+
+    <div class="max-w-4xl w-full">
+        
+        <div class="logo-container p-24 flex flex-col items-center">
+            
+            <!-- THE INTEGRATED LOGO -->
+            <div class="flex items-center">
+                
+                <!-- CUSTOM "INVENTORY-K" -->
+                <div class="sound-k-icon mr-2">
+                    <svg width="120" height="120" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- THE STEM: Stacked Inventory Boxes -->
+                        <rect x="15" y="10" width="18" height="22" rx="3" fill="#3E2723"/> <!-- Box 1 -->
+                        <rect x="15" y="36" width="18" height="22" rx="3" fill="#8B4513"/> <!-- Box 2 -->
+                        <rect x="15" y="62" width="18" height="28" rx="3" fill="#3E2723"/> <!-- Box 3 (Base) -->
+                        
+                        <!-- THE ARMS: Sound Waves (Static) -->
+                        <path d="M38 50L80 15" stroke="#8B4513" stroke-width="14" stroke-linecap="round"/>
+                        <path d="M38 50L80 85" stroke="#AF8260" stroke-width="14" stroke-linecap="round"/>
+                        
+                        <!-- Connection Point -->
+                        <circle cx="38" cy="50" r="6" fill="#3E2723"/>
+                    </svg>
+                </div>
+
+                <!-- THE REST OF THE TYPOGRAPHY -->
+                <h1 class="text-9xl font-black tracking-tighter text-[#3E2723] -ml-4">rama</h1>
+            </div>
+
+            <!-- TAGLINE -->
+            <div class="mt-12 flex flex-col items-center">
+                <div class="h-1 w-32 bg-[#AF8260] mb-4 rounded-full"></div>
+                <p class="text-sm font-bold uppercase tracking-[8px] text-[#795548]">Voice Driven Order</p>
+            </div>
+
+        </div>
+
+        <div class="mt-20 grid md:grid-cols-2 gap-10">
+            <div class="bg-white p-8 rounded-3xl border border-[#F1ECE1]">
+                <h4 class="text-xs font-black uppercase text-[#8B4513] mb-4">Design Logic</h4>
+                <p class="text-sm text-[#795548] leading-relaxed">
+                    The vertical stem of the <b>'K'</b> is reimagined as a <b>stack of three inventory crates</b>, grounding the brand in physical logistics. 
+                </p>
+            </div>
+            <div class="bg-white p-8 rounded-3xl border border-[#F1ECE1]">
+                <h4 class="text-xs font-black uppercase text-[#8B4513] mb-4">Technology Link</h4>
+                <p class="text-sm text-[#795548] leading-relaxed">
+                    The diagonal arms are <b>dynamic sound waves</b>, showing how voice AI pulses through the inventory to create systematic order (Krama).
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
