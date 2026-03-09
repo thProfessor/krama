@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krama AI - Investor Presentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Basis+Grotesque+Pro:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-brown: #8B4513;
+            --brand-beige: #AF8260;
+            --brand-espresso: #3E2723;
+            --brand-cream: #FDFBF7;
+            --brand-muted: #F1ECE1;
+        }
+        body { font-family: 'Basis Grotesque Pro', sans-serif; background-color: var(--brand-cream); color: var(--brand-espresso); scroll-behavior: smooth; }
+        
+        .accent-gradient { background: linear-gradient(135deg, #8B4513 0%, #AF8260 100%); }
+        .slide-section { min-height: 100vh; padding: 8rem 2rem; display: flex; flex-direction: column; justify-content: center; align-items: center; border-bottom: 1px solid var(--brand-muted); }
+        
+        /* High-Fidelity Phone Frame */
+        .phone-frame { width: 280px; height: 580px; border: 8px solid var(--brand-espresso); border-radius: 40px; position: relative; overflow: hidden; background: #fff; box-shadow: 0 30px 60px -12px rgba(62, 39, 35, 0.2); }
+        .app-screen { height: 100%; display: flex; flex-direction: column; background: var(--brand-bg); }
+        
+        /* Stats Card */
+        .stat-card { background: white; padding: 2rem; border-radius: 24px; border: 1px solid var(--brand-muted); box-shadow: 0 10px 30px rgba(0,0,0,0.02); }
+        
+        nav { background: rgba(253, 251, 247, 0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--brand-muted); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        
+        @keyframes pulse-brown { 0% { box-shadow: 0 0 0 0 rgba(139, 69, 19, 0.3); } 70% { box-shadow: 0 0 0 15px rgba(139, 69, 19, 0); } 100% { box-shadow: 0 0 0 0 rgba(139, 69, 19, 0); } }
+        .pulse { animation: pulse-brown 2s infinite; }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="fixed top-0 left-0 right-0 z-50 px-8 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-[#8B4513] rounded-lg flex items-center justify-center rotate-12 shadow-lg">
+                <i data-lucide="mic" class="w-5 h-5 text-white -rotate-12"></i>
+            </div>
+            <span class="text-xl font-black tracking-tighter text-[#3E2723]">Krama</span>
+        </div>
+        <div class="hidden lg:flex gap-8 text-[10px] font-black uppercase tracking-widest text-[#795548]">
+            <a href="#pitch" class="hover:text-[#8B4513]">Vision</a>
+            <a href="#market" class="hover:text-[#8B4513]">Market Size</a>
+            <a href="#product" class="hover:text-[#8B4513]">Product</a>
+            <a href="#economics" class="hover:text-[#8B4513]">Economics</a>
+            <a href="#tech" class="hover:text-[#8B4513]">Architecture</a>
+        </div>
+        <a href="MOBILE_PROTOTYPE.html" target="_blank" class="accent-gradient px-6 py-2.5 rounded-full text-white text-[10px] font-black shadow-lg hover:scale-105 transition-transform">LAUNCH PROTOTYPE</a>
+    </nav>
+
+    <!-- SECTION 1: HERO -->
+    <section id="pitch" class="slide-section bg-brand-muted">
+        <div class="max-w-5xl text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white text-[#8B4513] text-[10px] font-black uppercase tracking-widest shadow-sm mb-10">
+                <i data-lucide="award" class="w-3 h-3"></i> Restoring Order to Bharat's Trade
+            </div>
+            <h1 class="text-7xl md:text-9xl font-black text-[#3E2723] mb-8 tracking-tighter leading-[0.85]">
+                Systematic <br><span class="italic text-[#AF8260]">Voice-Ledger.</span>
+            </h1>
+            <p class="text-xl text-[#795548] mb-12 max-w-3xl mx-auto font-medium leading-relaxed">
+                Krama is the first AI-powered inventory system designed for the "non-typing" merchant. Speak in your language, and let AI handle the indexing, tracking, and alerts.
+            </p>
+            <div class="flex gap-4 justify-center">
+                <a href="#market" class="bg-[#3E2723] px-10 py-5 rounded-2xl text-white font-black text-lg">THE OPPORTUNITY</a>
+                <a href="MOBILE_PROTOTYPE.html" target="_blank" class="bg-white px-10 py-5 rounded-2xl text-[#8B4513] font-black text-lg border border-[#8B4513]/10">LIVE DEMO</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: MARKET SIZE (THE $600B OPPORTUNITY) -->
+    <section id="market" class="slide-section bg-white">
+        <div class="max-w-6xl w-full">
+            <div class="mb-20">
+                <h2 class="text-[11px] font-black text-[#AF8260] uppercase tracking-[4px] mb-4">Market Potential</h2>
+                <h3 class="text-5xl font-black text-[#3E2723] tracking-tighter">Bharat's Unorganized Retail.</h3>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="stat-card">
+                    <div class="text-[10px] font-black text-[#AF8260] uppercase mb-2">Total Addressable Market (TAM)</div>
+                    <div class="text-5xl font-black text-[#3E2723] mb-4">$600B+</div>
+                    <p class="text-xs font-medium text-[#795548]">The total value of India's retail sector, largely managed by manual physical registers.</p>
+                </div>
+                <div class="stat-card bg-[#3E2723] text-white">
+                    <div class="text-[10px] font-black text-[#AF8260] uppercase mb-2">Serviceable Market (SAM)</div>
+                    <div class="text-5xl font-black mb-4">$120B</div>
+                    <p class="text-xs font-medium text-white/60">Unorganized Kirana stores and regional distributors requiring digital transformation.</p>
+                </div>
+                <div class="stat-card">
+                    <div class="text-[10px] font-black text-[#AF8260] uppercase mb-2">Target (SOM) - Year 5</div>
+                    <div class="text-5xl font-black text-[#3E2723] mb-4">$1.2B</div>
+                    <p class="text-xs font-medium text-[#795548]">Targeting 1% market capture of unorganized retail inventory management SaaS.</p>
+                </div>
+            </div>
+
+            <div class="mt-16 p-10 bg-brand-muted rounded-[40px] flex flex-col md:flex-row items-center gap-12">
+                <div class="flex-grow">
+                    <h4 class="text-2xl font-black text-[#3E2723] mb-4">The "Bheed" Problem</h4>
+                    <p class="text-sm font-medium text-[#795548] leading-relaxed">Shop owners lose up to **₹25,000 monthly** due to stock outs and over-ordering. They want to go digital, but "typing during a rush" is impossible. **Voice is the only solution.**</p>
+                </div>
+                <div class="shrink-0 text-center">
+                    <div class="text-6xl font-black text-[#8B4513]">12M+</div>
+                    <div class="text-[10px] font-black uppercase text-[#3E2723] tracking-widest mt-2">Kirana Stores in India</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: PRODUCT SHOWCASE (SCREEN MOCKUPS) -->
+    <section id="product" class="slide-section bg-brand-muted">
+        <div class="max-w-6xl w-full text-center mb-20">
+            <h2 class="text-[11px] font-black text-[#AF8260] uppercase tracking-[4px] mb-4">Experience Krama</h2>
+            <h3 class="text-5xl font-black text-[#3E2723] tracking-tighter">Designed for the Shop Floor.</h3>
+        </div>
+
+        <div class="max-w-7xl w-full grid lg:grid-cols-3 gap-12 px-4">
+            <!-- Screen 1: Welcome -->
+            <div class="flex flex-col items-center">
+                <div class="phone-frame mb-6">
+                    <div class="app-screen p-6 items-center justify-center text-center">
+                        <div class="w-14 h-14 bg-[#8B4513] rounded-2xl flex items-center justify-center mb-6 rotate-12 shadow-lg"><i data-lucide="mic" class="w-8 h-8 text-white"></i></div>
+                        <h4 class="text-2xl font-black text-[#3E2723] mb-2">Krama</h4>
+                        <p class="text-[10px] text-[#795548] font-bold uppercase mb-10">Systematic Order</p>
+                        <div class="w-full h-10 bg-[#8B4513] rounded-xl flex items-center justify-center text-white text-[10px] font-black uppercase">Get Started</div>
+                    </div>
+                </div>
+                <p class="text-[10px] font-black text-[#AF8260] uppercase tracking-widest">1. Onboarding</p>
+            </div>
+
+            <!-- Screen 2: Voice Home (The actual interface) -->
+            <div class="flex flex-col items-center scale-110">
+                <div class="phone-frame mb-6 border-[#8B4513]">
+                    <div class="app-screen">
+                        <div class="p-4 pt-10 bg-white border-b border-[#F1ECE1]">
+                            <div class="flex justify-between items-center mb-4">
+                                <div class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-[#8B4513]"></i><span class="text-[10px] font-black">Main Warehouse</span></div>
+                                <div class="w-8 h-8 bg-stone-100 rounded-full"></div>
+                            </div>
+                        </div>
+                        <div class="p-6 flex-grow flex flex-col items-center justify-center text-center">
+                            <div class="text-[8px] font-black text-[#8B4513] uppercase mb-4 tracking-widest">Listening...</div>
+                            <div class="text-lg font-black text-[#3E2723] leading-tight px-4 italic">"Aaj Zone A mein 45kg tamba add kar lo"</div>
+                            <div class="mt-8 flex gap-1 h-6 items-center">
+                                <div class="w-1 bg-[#8B4513] h-2"></div><div class="w-1 bg-[#8B4513] h-6"></div><div class="w-1 bg-[#8B4513] h-4"></div>
+                            </div>
+                        </div>
+                        <div class="h-16 bg-white border-t border-[#F1ECE1] relative">
+                            <div class="w-14 h-14 bg-[#8B4513] rounded-full absolute -top-7 left-1/2 -translate-x-1/2 border-4 border-white flex items-center justify-center text-white pulse">
+                                <i data-lucide="mic" class="w-6 h-6"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-[10px] font-black text-[#8B4513] uppercase tracking-widest">2. Voice Interface</p>
+            </div>
+
+            <!-- Screen 3: List/Insights -->
+            <div class="flex flex-col items-center">
+                <div class="phone-frame mb-6">
+                    <div class="app-screen bg-white">
+                        <div class="p-6 pt-10">
+                            <h4 class="text-xl font-black text-[#3E2723] mb-6">Inventory</h4>
+                            <div class="space-y-4">
+                                <div class="flex gap-3 items-center p-2 bg-stone-50 rounded-xl">
+                                    <div class="w-10 h-10 bg-stone-200 rounded-lg"></div>
+                                    <div><div class="text-[10px] font-black">Copper Tubing</div><div class="text-[8px] font-bold text-[#AF8260]">840 KG Left</div></div>
+                                </div>
+                                <div class="flex gap-3 items-center p-2 bg-red-50 border border-red-100 rounded-xl">
+                                    <div class="w-10 h-10 bg-red-200 rounded-lg"></div>
+                                    <div><div class="text-[10px] font-black text-red-600">Steel Rods</div><div class="text-[8px] font-bold text-red-400">LOW STOCK</div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-[10px] font-black text-[#AF8260] uppercase tracking-widest">3. Systematic Ledger</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: UNIT ECONOMICS (INVESTOR VIEW) -->
+    <section id="economics" class="slide-section bg-white">
+        <div class="max-w-6xl w-full">
+            <div class="mb-20 text-center">
+                <h2 class="text-[11px] font-black text-[#AF8260] uppercase tracking-[4px] mb-4">Unit Economics</h2>
+                <h3 class="text-5xl font-black text-[#3E2723] tracking-tighter">Scalable SaaS Dynamics.</h3>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 mb-16">
+                <!-- Acquisition -->
+                <div class="p-10 bg-brand-muted rounded-[40px]">
+                    <h4 class="text-xl font-black text-[#3E2723] mb-8 uppercase tracking-widest">Acquisition & Retention</h4>
+                    <div class="space-y-6">
+                        <div class="flex justify-between items-center py-4 border-b border-white/50">
+                            <span class="text-sm font-bold text-[#795548]">CAC (Cust. Acquisition Cost)</span>
+                            <span class="text-lg font-black text-[#8B4513]">₹1,200</span>
+                        </div>
+                        <div class="flex justify-between items-center py-4 border-b border-white/50">
+                            <span class="text-sm font-bold text-[#795548]">LTV (Lifetime Value - 3 Yrs)</span>
+                            <span class="text-lg font-black text-[#8B4513]">₹18,000</span>
+                        </div>
+                        <div class="flex justify-between items-center py-4">
+                            <span class="text-sm font-bold text-[#795548]">Payback Period</span>
+                            <span class="text-lg font-black text-[#8B4513]">3.2 Months</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Margin -->
+                <div class="p-10 bg-[#3E2723] text-white rounded-[40px]">
+                    <h4 class="text-xl font-black text-[#AF8260] mb-8 uppercase tracking-widest">Platform Economics</h4>
+                    <div class="space-y-6 text-white/80">
+                        <div class="flex justify-between items-center py-4 border-b border-white/10">
+                            <span class="text-sm font-bold">Gross Margin</span>
+                            <span class="text-lg font-black text-[#AF8260]">88%</span>
+                        </div>
+                        <div class="flex justify-between items-center py-4 border-b border-white/10">
+                            <span class="text-sm font-bold">Avg. ARPU (Monthly)</span>
+                            <span class="text-lg font-black text-[#AF8260]">₹850</span>
+                        </div>
+                        <div class="flex justify-between items-center py-4">
+                            <span class="text-sm font-bold">Churn Rate (Target)</span>
+                            <span class="text-lg font-black text-[#AF8260]">&lt; 3%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRICING TIERS -->
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="p-8 bg-white border border-[#F1ECE1] rounded-3xl">
+                    <div class="text-[9px] font-black text-[#AF8260] uppercase mb-2">Basic Shop</div>
+                    <div class="text-3xl font-black text-[#3E2723] mb-6">₹499<span class="text-xs text-[#795548]">/mo</span></div>
+                    <p class="text-[10px] font-bold text-[#795548] leading-relaxed mb-6">Essential voice ledger for small Kirana stores with up to 500 items.</p>
+                    <div class="text-[10px] font-black text-[#3E2723] border-t border-[#F1ECE1] pt-4 uppercase">Unlimited Voice Entry</div>
+                </div>
+                <div class="p-8 bg-white border-2 border-[#8B4513] rounded-3xl relative">
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#8B4513] text-white px-4 py-1 rounded-full text-[8px] font-black uppercase">Partner Choice</div>
+                    <div class="text-[9px] font-black text-[#8B4513] uppercase mb-2">Pro Warehouse</div>
+                    <div class="text-3xl font-black text-[#3E2723] mb-6">₹1,999<span class="text-xs text-[#795548]">/mo</span></div>
+                    <p class="text-[10px] font-bold text-[#795548] leading-relaxed mb-6">Advanced indexing with AI Image Recognition and WhatsApp low-stock alerts.</p>
+                    <div class="text-[10px] font-black text-[#8B4513] border-t border-[#F1ECE1] pt-4 uppercase">AI Visual Match included</div>
+                </div>
+                <div class="p-8 bg-white border border-[#F1ECE1] rounded-3xl">
+                    <div class="text-[9px] font-black text-[#AF8260] uppercase mb-2">Enterprise</div>
+                    <div class="text-3xl font-black text-[#3E2723] mb-6">Custom</div>
+                    <p class="text-[10px] font-bold text-[#795548] leading-relaxed mb-6">Multi-warehouse sync for large retail chains and distribution hubs.</p>
+                    <div class="text-[10px] font-black text-[#3E2723] border-t border-[#F1ECE1] pt-4 uppercase">Custom AI Training</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: TECH ARCHITECTURE -->
+    <section id="tech" class="slide-section bg-brand-muted">
+        <div class="max-w-6xl w-full">
+            <div class="text-center mb-20">
+                <h2 class="text-[11px] font-black text-[#AF8260] uppercase tracking-[4px] mb-4">Technical Backbone</h2>
+                <h3 class="text-5xl font-black text-[#3E2723] tracking-tighter">Voice Intelligence Engine.</h3>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="space-y-8">
+                    <div class="p-8 bg-white rounded-3xl shadow-sm border border-white">
+                        <h4 class="text-lg font-black text-[#8B4513] mb-4 flex items-center gap-2"><i data-lucide="mic-2"></i> STT & NLP Layer</h4>
+                        <p class="text-xs font-bold text-[#795548] leading-relaxed">We utilize **Whisper Large-v3** fine-tuned for Indian accents and background noise. Our proprietary parsing layer extracts **Intent**, **Entity (Item)**, and **Quantity** from Hinglish speech with 96% accuracy.</p>
+                    </div>
+                    <div class="p-8 bg-white rounded-3xl shadow-sm border border-white">
+                        <h4 class="text-lg font-black text-[#8B4513] mb-4 flex items-center gap-2"><i data-lucide="zap"></i> Real-time Sync</h4>
+                        <p class="text-xs font-bold text-[#795548] leading-relaxed">Powered by **Node.js** and **Redis**, inventory updates propagate to the management dashboard in &lt;200ms of the voice command being processed.</p>
+                    </div>
+                </div>
+                <div class="p-12 bg-[#3E2723] rounded-[48px] text-white">
+                    <h4 class="text-2xl font-black mb-8 text-[#AF8260]">System Specs</h4>
+                    <div class="space-y-6">
+                        <div><div class="text-[9px] font-black uppercase text-white/40 mb-1">AI Stack</div><div class="text-sm font-bold">Whisper v3 / GPT-4o-mini / Sarvam AI</div></div>
+                        <div><div class="text-[9px] font-black uppercase text-white/40 mb-1">Backend</div><div class="text-sm font-bold">FastAPI / Node.js (TypeScript)</div></div>
+                        <div><div class="text-[9px] font-black uppercase text-white/40 mb-1">Infrastructure</div><div class="text-sm font-bold">AWS Lambda / PostgreSQL / Redis</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-24 text-center bg-white border-t border-[#F1ECE1]">
+        <div class="w-12 h-12 bg-[#8B4513] rounded-2xl flex items-center justify-center mx-auto mb-8 rotate-12 shadow-xl shadow-orange-100">
+            <i data-lucide="mic" class="w-8 h-8 text-white -rotate-12"></i>
+        </div>
+        <h2 class="text-4xl font-black text-[#3E2723] mb-6 tracking-tighter italic">Krama: Restoring Order to Trade.</h2>
+        <div class="text-[#795548] text-xs font-black uppercase tracking-widest">© 2026 KRAMA AI SYSTEMS PRIVATE LIMITED</div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

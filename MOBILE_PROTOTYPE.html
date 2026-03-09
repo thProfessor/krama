@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krama - Production Inventory Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Basis+Grotesque+Pro:wght@400;500;700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --brand-primary: #8B4513;
+            /* Rich Brown */
+            --brand-text-dark: #3E2723;
+            /* Espresso */
+            --brand-text-light: #795548;
+            /* Muted Brown */
+            --brand-bg: #FDFBF7;
+            /* Cream */
+            --brand-gray: #F1ECE1;
+            /* Beige Muted */
+        }
+
+        body {
+            font-family: 'Basis Grotesque Pro', sans-serif;
+            background: #2D2424;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            color: var(--brand-text-dark);
+        }
+
+        .btn-brand {
+            background: var(--brand-primary);
+            color: #fff;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(139, 69, 19, 0.15);
+        }
+
+        .card-brand {
+            border-radius: 20px;
+            transition: transform 0.2s;
+            background: #fff;
+            border: 1px solid var(--brand-gray);
+        }
+
+        .phone-container {
+            width: 360px;
+            height: 740px;
+            background: #3E2723;
+            border-radius: 48px;
+            padding: 12px;
+            box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.6);
+            position: relative;
+            border: 4px solid #5D4037;
+        }
+
+        .screen {
+            width: 100%;
+            height: 100%;
+            background: var(--brand-bg);
+            border-radius: 36px;
+            overflow: hidden;
+            position: relative;
+            display: none;
+            flex-direction: column;
+            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: #fff;
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding-bottom: 12px;
+            border-radius: 0 0 36px 36px;
+            z-index: 100;
+            border-top: 1px solid var(--brand-gray);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: #9E9E9E;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex: 1;
+        }
+
+        .nav-item.active {
+            color: var(--brand-primary);
+        }
+
+        .nav-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .mic-action {
+            width: 68px;
+            height: 68px;
+            background: var(--brand-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            box-shadow: 0 8px 20px rgba(139, 69, 19, 0.3);
+            border: 5px solid #fff;
+            position: absolute;
+            top: -34px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 110;
+        }
+
+        .mic-action.active {
+            background: #5D4037;
+            transform: translateX(-50%) scale(1.1);
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .waveform {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            height: 40px;
+        }
+
+        .bar {
+            width: 4px;
+            background: var(--brand-primary);
+            border-radius: 10px;
+            height: 4px;
+            transition: height 0.1s;
+        }
+
+        .listening .bar {
+            animation: wave 0.8s infinite ease-in-out;
+        }
+
+        @keyframes wave {
+
+            0%,
+            100% {
+                height: 8px;
+            }
+
+            50% {
+                height: 35px;
+            }
+        }
+
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+
+        .progress-ring-circle {
+            transition: stroke-dashoffset 0.35s;
+            transform-origin: 50% 50%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="phone-container">
+
+        <!-- 1. WELCOME SCREEN -->
+        <div id="welcome" class="screen active flex flex-col">
+            <div class="p-8 pt-24 flex-grow flex flex-col items-center text-center">
+                <div
+                    class="w-20 h-20 bg-[#8B4513] rounded-[24px] flex items-center justify-center mb-8 rotate-12 shadow-xl">
+                    <i data-lucide="mic" class="w-12 h-12 text-white -rotate-12"></i>
+                </div>
+                <h1 class="text-4xl font-black text-[#3E2723] tracking-tighter mb-2">Krama</h1>
+                <p class="text-[#795548] font-medium text-lg leading-snug mb-12">Bringing systematic order to your
+                    business via voice
+                    AI.</p>
+                <div class="w-full space-y-4 text-left">
+                    <div class="flex items-center gap-4 p-5 bg-white rounded-2xl border border-[#F1ECE1] shadow-sm">
+                        <div class="w-12 h-12 bg-stone-50 rounded-xl flex items-center justify-center text-[#8B4513]"><i
+                                data-lucide="zap" class="w-6 h-6"></i></div>
+                        <div>
+                            <div class="font-black text-sm uppercase text-[#3E2723]">Instant Indexing</div>
+                            <div class="text-xs text-[#795548] font-medium">Just speak to update stock</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full mt-auto">
+                    <button onclick="showScreen('home')"
+                        class="btn-brand w-full py-5 text-lg uppercase tracking-tight">Get Started</button>
+                    <button onclick="showScreen('home')"
+                        class="btn-brand w-full py-5 text-lg uppercase tracking-tight mt-2">LOGIN TO DASHBOARD</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. HOME SCREEN (VOICE) -->
+        <div id="home" class="screen bg-[#F1ECE1] mt-6">
+            <div class="bg-white p-6 pt-12 shadow-sm border-b border-[#F1ECE1]">
+                <div class="flex justify-between items-center mb-4">
+                    <div class="flex items-center gap-2 text-left">
+                        <i data-lucide="map-pin" class="w-5 h-5 text-[#8B4513]"></i>
+                        <div>
+                            <div class="text-[10px] font-black uppercase text-[#8B4513]">Active Ledger</div>
+                            <div class="text-sm font-black text-[#3E2723]">Central Warehouse</div>
+                        </div>
+                    </div>
+                    <div
+                        class="w-10 h-10 bg-stone-100 rounded-full flex items-center justify-center text-[#3E2723] border-2 border-white shadow-sm">
+                        <i data-lucide="user" class="w-5 h-5"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-6 flex-grow overflow-y-auto no-scrollbar pb-24">
+                <div
+                    class="bg-white rounded-[32px] p-10 shadow-sm border border-[#F1ECE1] min-h-[340px] flex flex-col items-center justify-center text-center">
+                    <div id="vStatus" class="text-[#8B4513] font-black mb-6 uppercase text-[10px] tracking-[2px]">Tap
+                        mic to speak</div>
+                    <div id="vTranscript"
+                        class="text-2xl font-black text-stone-200 leading-tight transition-all duration-300">"Add 45kg
+                        Copper Tubing to Zone B"</div>
+
+                    <div id="vWave" class="waveform mt-10 opacity-0">
+                        <div class="bar"></div>
+                        <div class="bar" style="animation-delay: 0.3s"></div>
+                        <div class="bar" style="animation-delay: 0.1s"></div>
+                    </div>
+                </div>
+                <div class="mt-8">
+                    <h3 class="text-[11px] font-black text-[#795548] uppercase tracking-widest mb-4">TRY SAYING</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <div
+                            class="bg-white px-4 py-2 rounded-full border border-[#F1ECE1] text-[10px] font-black text-[#3E2723] shadow-sm">
+                            "Stock level dikhao"</div>
+                        <div
+                            class="bg-white px-4 py-2 rounded-full border border-[#F1ECE1] text-[10px] font-black text-[#3E2723] shadow-sm">
+                            "12kg Steel out"</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bottom-nav">
+                <div class="nav-item active" onclick="showScreen('home')"><i data-lucide="mic" class="w-6 h-6"></i><span
+                        class="nav-label">VOICE</span></div>
+                <div class="nav-item" onclick="showScreen('list')"><i data-lucide="layout-grid"
+                        class="w-6 h-6"></i><span class="nav-label">INVENTORY</span></div>
+                <div class="relative w-16">
+                    <div id="micBtn" onclick="toggleMic()" class="mic-action shadow-xl"><i data-lucide="mic"
+                            class="w-8 h-8"></i></div>
+                </div>
+                <div class="nav-item" onclick="showScreen('insights')"><i data-lucide="bar-chart-2"
+                        class="w-6 h-6"></i><span class="nav-label">INSIGHTS</span></div>
+                <div class="nav-item" onclick="showScreen('notifs')"><i data-lucide="bell" class="w-6 h-6"></i><span
+                        class="nav-label">ALERTS</span></div>
+            </div>
+        </div>
+
+        <!-- 3. INVENTORY LIST -->
+        <div id="list" class="screen bg-white">
+            <div class="p-6 pt-14 pb-24 overflow-y-auto no-scrollbar">
+                <h2 class="text-3xl font-black text-[#3E2723] tracking-tighter mb-8 text-left">Ledger Index</h2>
+                <div class="flex gap-4 p-4 bg-red-50 rounded-2xl border border-red-100 mb-8 text-left">
+                    <div
+                        class="w-10 h-10 bg-red-600 rounded-xl flex items-center justify-center text-white shrink-0 shadow-lg">
+                        <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <div class="text-[10px] font-black text-red-600 uppercase">Alert</div>
+                        <div class="text-xs font-bold text-red-900">Steel Rods below 10%</div>
+                    </div>
+                </div>
+                <div class="space-y-6">
+                    <div class="flex items-center gap-4 text-left">
+                        <img src="https://images.unsplash.com/photo-1558449028-b53a39d100fc?w=100"
+                            class="w-16 h-16 rounded-2xl object-cover shadow-sm">
+                        <div class="flex-grow">
+                            <div class="text-sm font-black">Copper Tubing</div>
+                            <div class="text-[10px] text-[#795548] font-bold">Zone B-12 • 840kg</div>
+                        </div>
+                        <div class="text-[10px] font-black text-emerald-700">IN STOCK</div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-nav">
+                <div class="nav-item" onclick="showScreen('home')"><i data-lucide="mic" class="w-6 h-6"></i><span
+                        class="nav-label">VOICE</span></div>
+                <div class="nav-item active" onclick="showScreen('list')"><i data-lucide="layout-grid"
+                        class="w-6 h-6"></i><span class="nav-label">INVENTORY</span></div>
+                <div class="relative w-16">
+                    <div onclick="showScreen('home')" class="mic-action shadow-xl"><i data-lucide="mic"
+                            class="w-8 h-8"></i></div>
+                </div>
+                <div class="nav-item" onclick="showScreen('insights')"><i data-lucide="bar-chart-2"
+                        class="w-6 h-6"></i><span class="nav-label">INSIGHTS</span></div>
+                <div class="nav-item" onclick="showScreen('notifs')"><i data-lucide="bell" class="w-6 h-6"></i><span
+                        class="nav-label">ALERTS</span></div>
+            </div>
+        </div>
+
+        <!-- 4. PRODUCTION INSIGHTS DASHBOARD -->
+        <div id="insights" class="screen bg-[#F1ECE1]">
+            <div class="p-6 pt-14 pb-24 overflow-y-auto no-scrollbar text-left">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-2xl font-black text-[#3E2723] tracking-tighter uppercase">Insights</h2>
+                    <div class="flex bg-white rounded-lg p-1 text-[8px] font-black border border-[#E8E1D5]">
+                        <span class="bg-[#8B4513] text-white px-2 py-1 rounded">WEEK</span>
+                        <span class="px-2 py-1 text-slate-400">MONTH</span>
+                    </div>
+                </div>
+
+                <!-- KPI Grid -->
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="bg-white p-5 rounded-3xl shadow-sm border border-[#F1ECE1]">
+                        <div class="text-[9px] font-black text-[#795548] uppercase mb-1">Total Value</div>
+                        <div class="text-lg font-black text-[#3E2723]">₹12.4L</div>
+                        <div class="text-[8px] font-bold text-emerald-600 flex items-center gap-1 mt-1"><i
+                                data-lucide="trending-up" class="w-2 h-2"></i> +4.2%</div>
+                    </div>
+                    <div class="bg-white p-5 rounded-3xl shadow-sm border border-[#F1ECE1]">
+                        <div class="text-[9px] font-black text-[#795548] uppercase mb-1">Stock Turnover</div>
+                        <div class="text-lg font-black text-[#3E2723]">4.2x</div>
+                        <div class="text-[8px] font-bold text-slate-400 flex items-center gap-1 mt-1">Healthy</div>
+                    </div>
+                </div>
+
+                <!-- Inventory Health Circular Chart -->
+                <div class="bg-white rounded-3xl p-6 shadow-sm border border-[#F1ECE1] mb-6 flex items-center gap-6">
+                    <div class="relative w-24 h-24">
+                        <svg class="progress-ring" width="96" height="96">
+                            <circle class="text-stone-100" stroke-width="8" stroke="currentColor" fill="transparent"
+                                r="40" cx="48" cy="48" />
+                            <circle class="text-[#8B4513]" stroke-width="8" stroke-dasharray="251.2"
+                                stroke-dashoffset="30" stroke-linecap="round" stroke="currentColor" fill="transparent"
+                                r="40" cx="48" cy="48" />
+                        </svg>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center">
+                            <span class="text-xl font-black text-[#3E2723]">88%</span>
+                            <span class="text-[7px] font-black text-[#795548] uppercase">Healthy</span>
+                        </div>
+                    </div>
+                    <div class="flex-grow">
+                        <h4 class="text-sm font-black text-[#3E2723]">Ledger Health</h4>
+                        <p class="text-[10px] font-medium text-[#795548] leading-tight mt-1">Your inventory indexing is
+                            highly accurate this week.</p>
+                    </div>
+                </div>
+
+                <!-- Category Breakdown -->
+                <h3 class="text-[11px] font-black text-[#795548] uppercase tracking-widest mb-4">Stock Breakdown</h3>
+                <div class="bg-white rounded-3xl p-6 shadow-sm border border-[#F1ECE1] space-y-5">
+                    <div>
+                        <div class="flex justify-between text-[10px] font-black mb-2 uppercase"><span>Metals &
+                                Scrap</span><span>₹8.2L</span></div>
+                        <div class="w-full bg-stone-100 h-2 rounded-full overflow-hidden">
+                            <div class="bg-[#8B4513] h-full w-[70%]"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-[10px] font-black mb-2 uppercase"><span>Building
+                                Materials</span><span>₹3.1L</span></div>
+                        <div class="w-full bg-stone-100 h-2 rounded-full overflow-hidden">
+                            <div class="bg-[#AF8260] h-full w-[25%]"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-[10px] font-black mb-2 uppercase"><span>Other
+                                Commodities</span><span>₹1.1L</span></div>
+                        <div class="w-full bg-stone-100 h-2 rounded-full overflow-hidden">
+                            <div class="bg-stone-300 h-full w-[5%]"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actionable Insight -->
+                <div class="mt-6 p-5 bg-[#3E2723] rounded-3xl text-white">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="w-8 h-8 bg-[#8B4513] rounded-xl flex items-center justify-center"><i
+                                data-lucide="sparkles" class="w-4 h-4 text-[#AF8260]"></i></div>
+                        <h4 class="text-xs font-black uppercase">Krama Insight</h4>
+                    </div>
+                    <p class="text-[10px] font-medium text-white/70 leading-relaxed">"Copper Scraps are moving 20%
+                        faster than last week. Consider increasing Zone B storage by tomorrow."</p>
+                </div>
+            </div>
+
+            <div class="bottom-nav">
+                <div class="nav-item" onclick="showScreen('home')"><i data-lucide="mic" class="w-6 h-6"></i><span
+                        class="nav-label">VOICE</span></div>
+                <div class="nav-item" onclick="showScreen('list')"><i data-lucide="layout-grid"
+                        class="w-6 h-6"></i><span class="nav-label">INVENTORY</span></div>
+                <div class="relative w-16">
+                    <div onclick="showScreen('home')" class="mic-action shadow-xl"><i data-lucide="mic"
+                            class="w-8 h-8"></i></div>
+                </div>
+                <div class="nav-item active" onclick="showScreen('insights')"><i data-lucide="bar-chart-2"
+                        class="w-6 h-6"></i><span class="nav-label">INSIGHTS</span></div>
+                <div class="nav-item" onclick="showScreen('notifs')"><i data-lucide="bell" class="w-6 h-6"></i><span
+                        class="nav-label">ALERTS</span></div>
+            </div>
+        </div>
+
+        <!-- 5. NOTIFS -->
+        <div id="notifs" class="screen bg-[#F1ECE1]">
+            <div class="p-6 pt-14 pb-24 overflow-y-auto no-scrollbar text-left">
+                <h2 class="text-2xl font-black text-[#3E2723] mb-8 tracking-tighter uppercase">Activity</h2>
+                <div class="space-y-4">
+                    <div class="p-5 bg-white rounded-2xl flex gap-4 shadow-sm border border-[#F1ECE1]">
+                        <div
+                            class="w-12 h-12 bg-stone-50 rounded-xl flex items-center justify-center text-[#8B4513] shrink-0">
+                            <i data-lucide="mic-2" class="w-6 h-6"></i>
+                        </div>
+                        <div class="flex-grow">
+                            <div class="text-[10px] font-black text-[#795548] uppercase mb-1">VOICE UPDATE</div>
+                            <div class="text-sm font-black text-[#3E2723]">45kg Copper added</div>
+                            <div class="text-[10px] text-stone-400 mt-1 font-bold">2 mins ago</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-nav">
+                <div class="nav-item" onclick="showScreen('home')"><i data-lucide="mic" class="w-6 h-6"></i><span
+                        class="nav-label">VOICE</span></div>
+                <div class="nav-item" onclick="showScreen('list')"><i data-lucide="layout-grid"
+                        class="w-6 h-6"></i><span class="nav-label">INVENTORY</span></div>
+                <div class="relative w-16">
+                    <div onclick="showScreen('home')" class="mic-action shadow-xl"><i data-lucide="mic"
+                            class="w-8 h-8"></i></div>
+                </div>
+                <div class="nav-item" onclick="showScreen('insights')"><i data-lucide="bar-chart-2"
+                        class="w-6 h-6"></i><span class="nav-label">INSIGHTS</span></div>
+                <div class="nav-item active" onclick="showScreen('notifs')"><i data-lucide="bell"
+                        class="w-6 h-6"></i><span class="nav-label">ALERTS</span></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        lucide.createIcons();
+        function showScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            lucide.createIcons();
+        }
+
+        let isListening = false;
+        function toggleMic() {
+            const status = document.getElementById('vStatus');
+            const transcript = document.getElementById('vTranscript');
+            const wave = document.getElementById('vWave');
+            const micBtn = document.getElementById('micBtn');
+
+            isListening = !isListening;
+            if (isListening) {
+                status.innerText = "LISTENING NOW...";
+                transcript.innerText = "";
+                transcript.classList.replace('text-stone-200', 'text-[#3E2723]');
+                wave.style.opacity = "1";
+                micBtn.classList.add('active');
+
+                const text = "Aaj Zone A mein 45kg tamba add kar lo";
+                let i = 0;
+                const timer = setInterval(() => {
+                    transcript.innerText += text[i++];
+                    if (i >= text.length) {
+                        clearInterval(timer);
+                        setTimeout(toggleMic, 1500);
+                    }
+                }, 50);
+            } else {
+                status.innerText = "UPDATING LEDGER...";
+                wave.style.opacity = "0";
+                micBtn.classList.remove('active');
+
+                setTimeout(() => {
+                    status.innerText = "KRAMA UPDATED ✅";
+                    setTimeout(() => {
+                        status.innerText = "TAP MIC TO SPEAK";
+                        transcript.innerText = "Next command...";
+                        transcript.classList.replace('text-[#3E2723]', 'text-stone-200');
+                    }, 2000);
+                }, 1000);
+            }
+        }
+    </script>
+</body>
+
+</html>
